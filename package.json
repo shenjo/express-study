@@ -1,0 +1,29 @@
+{
+  "name": "express-study",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack && node dist/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shenjo/express-study.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shenjo/express-study/issues"
+  },
+  "homepage": "https://github.com/shenjo/express-study#readme",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "lodash": "^4.17.4",
+    "methods": "^1.1.2",
+    "webpack": "^3.8.1"
+  }
+}
