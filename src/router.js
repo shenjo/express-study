@@ -1,22 +1,11 @@
-const layer = (method, fn) => {
-	this.method = method;
-	this.fn = fn;
-};
+class Router{
 
-layer.handle_method = (req) => {
-	return req.method.toLowerCase() === this.method.toLowerCase();
-};
+  constructor () {
+    this.stacks = [];
+    this.methods = {};
+  }
 
-layer.handle_request = (req, res, next) => {
-	if (!this.handle_method(req)) {
-		return;
-	}
-	try {
-		this.fn(req, res, next);
-	} catch (err) {
-		throw err;
-	}
-};
-
-
-
+  handleMethod(method){
+    return !!this.methods[method.toLowerCase()];
+  }
+}

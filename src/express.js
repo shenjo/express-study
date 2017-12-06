@@ -1,35 +1,39 @@
 const http = require('http'),
-	methods = require('methods'),
-	layer = require('./router'),
-	_ = require('lodash');
+  methods = require('methods'),
+  Layer = require('./layer');
 
-const obj = Object.create(null);
-obj.listen = function(port) {
-	const server = http.createServer(this);
-	return server.listen(port);
-};
+class MyExpress {
+  constructor () {
+    this.handlers = [];
+    this.init();
+  }
 
-obj.init = ()=>{
-	this.handlers = [];
-	methods.forEach((method)=>{
-		console.log(method);
-		this[method] = (fn)=>{
-			this.handlers.push(new layer(method,fn))
-		}
-	});
-};
+  init () {
+    methods.forEach((method) => {
+      this[method] = (fn) => {
+        this.handlers.push(new Layer(method, fn))
+      }
+    });
+  }
 
-obj.handle = (req,res)=>{
-	this.handlers.forEach((handler)=>{
-		handler.handle_request(req,res)
-	})
+  handle (req, res) {
+    this.handlers.forEach((handler) => {
+      handler.handle_request(req, res);
+    })
+  }
+
+  listen (port, callback) {
+    const server = http.createServer(this);
+    callback ? callback() : '';
+    return server.listen(port);
+  }
 }
 
-module.exports =  () =>{
-	const app = (req, res) => {
-		app.handle(req,res)
-	};
-	_.merge(app, obj);
-	app.init();
-	return app;
-}
+module.exports = () => {
+  const myExpress = new MyExpress();
+  const app = (req, res, next) => {
+    myExpress.handle(req, res, next);
+  };
+  app['__proto__']['__proto__'] = myExpress;
+  return app;
+};
